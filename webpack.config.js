@@ -1,10 +1,8 @@
-'use strict';
-
 require('dotenv').config();
 const HTMLPlugin = require('html-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const UglifyPlugin = require('uglifyjs-webpack-plugin');
-const {DefinePlugin, EnvironmentPlugin} = require('webpack');
+const { DefinePlugin, EnvironmentPlugin } = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const webpackConfig = module.exports = {};
@@ -32,7 +30,7 @@ webpackConfig.plugins = [
   }),
 ];
 
-if(PRODUCTION) {
+if (PRODUCTION) {
   webpackConfig.plugins = webpackConfig.plugins.concat([
     new UglifyPlugin(),
     new CleanPlugin(['build']),
