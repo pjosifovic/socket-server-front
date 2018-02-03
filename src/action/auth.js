@@ -28,7 +28,7 @@ export const signupAction = (user) => (store) =>
     .catch(console.log);
 
 export const loginAction = (user) => (store) => 
-  superagent.post(`${API_URL}/login`)
+  superagent.get(`${API_URL}/login`)
     .auth(user.username, user.password)
     .withCredentials()
     .then(({ text }) =>
