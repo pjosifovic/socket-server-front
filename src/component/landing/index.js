@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import socketTest from '../../socket';
@@ -10,8 +10,10 @@ class Landing extends Component {
 
   render() {
     return (
-      <AuthForm type="signup" onComplete={socketTest} />
-      // <AuthForm type="signup" onComplete={this.props.signup} />
+      <Fragment>
+        <AuthForm type="signup" onComplete={socketTest} />
+        <AuthForm type="login" onComplete={this.props.signup} />
+      </Fragment>
     );
   }
 }
