@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import socketTest from '../../socket';
 import AuthForm from '../auth-form';
 import { signupAction } from '../../action/auth';
 
@@ -9,7 +10,8 @@ class Landing extends Component {
 
   render() {
     return (
-      <AuthForm type="signup" onComplete={this.props.signup} />
+      <AuthForm type="signup" onComplete={socketTest} />
+      // <AuthForm type="signup" onComplete={this.props.signup} />
     );
   }
 }
