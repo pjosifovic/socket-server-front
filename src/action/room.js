@@ -10,16 +10,19 @@ const removeRoomAction = () => ({
 });
 
 export const createRoomAction = (room) => (store) => {
-  const clientSocket = store.getState().socket;
-  console.log('client socket', clientSocket);
-  clientSocket.emit('createRoom', room);
-  return store.dispatch(setRoomAction(room));
-};
-  // superagent.post(`${API_URL}/create`)
-  //   .send(room)
-  //   .then(console.log)
-  //   .catch(console.log);
+  const { socket } = store.getState();
 
-export const joinRoomAction = (user) => (store) => // TODO: make do stuff
-  superagent.get(`${API_URL}/login`)
-    .catch(console.log);
+  socket.emit('create room', room);
+  return store.dispatch(setRoomAction(room));
+  // TODO: NEED TO SET ROOM STATE AFTER
+  // SERVER CONFIRMS THE NAME IS AVAILABLE
+};
+
+export const joinRoomAction = (room) => (store) => {
+  const { socket } = store.getState();
+
+  socket.emit('join room', room);
+  return store.dispatch(setRoomAction(room));
+  // TODO: NEED TO SET ROOM STATE AFTER
+  // SERVER CONFIRMS THE NAME IS AVAILABLE
+};

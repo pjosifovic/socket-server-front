@@ -33,7 +33,6 @@ class SocketForm extends Component {
 
     const { roomNameError, roomName } = this.state;
 
-
     if (!roomNameError) {
       if (!this.props.socket) {
         this.props.socketConnect();
