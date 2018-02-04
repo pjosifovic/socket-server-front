@@ -28,6 +28,7 @@ export const signupAction = (user) => (store) =>
       store.dispatch(setTokenAction(text))
     )
     .catch(console.log);
+  // TODO: Rob - we need error handling here
 
 export const loginAction = (user) => (store) => 
   superagent.get(`${API_URL}/login`)
@@ -37,3 +38,4 @@ export const loginAction = (user) => (store) =>
       store.dispatch(setTokenAction(text))
     )
     .catch(console.log);
+  // TODO: Rob - we need error handling here

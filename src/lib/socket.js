@@ -1,6 +1,7 @@
 import openSocket from 'socket.io-client';
+import { setRoomAction } from '../action/room';
 
-export default () => {
+export default dispatch => { // TODO: Rob - takes in dispatch to allow state changing
   const socket = openSocket(API_URL);
 
   socket.on('room conflict', data => {
@@ -12,6 +13,7 @@ export default () => {
     console.log(data); 
     // TODO: HANDLE ROOM CREATION, take to room dashboard
     // TODO: SET STATE of ROOM to owner: true
+    dispatch(setRoomAction('this is a room fa show!'));
   });
 
   socket.on('room joined', data => {

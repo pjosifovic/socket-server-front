@@ -1,3 +1,6 @@
+// TODO: Rob - Currently this holds all of the available logic
+//             eventually this will need to be split up.
+
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 

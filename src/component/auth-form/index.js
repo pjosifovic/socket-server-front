@@ -2,6 +2,8 @@ import React, { Fragment } from 'react';
 import validator from 'validator';
 
 class AuthForm extends React.Component {
+  // Rob - babel-preset-stage-2 includes class features that implicitly bind to the instance
+  // Rob - This means no need for a constructor or props here
   state = {
     username: '',
     usernameDirty: false,
@@ -20,12 +22,11 @@ class AuthForm extends React.Component {
 
   emptyState = { ...this.state };
 
-
+  // Rob - arrow functions adopt the 'this' of their defining scope
   generateClassName = (formField) => 
     (this.state[`${formField}Dirty`] &&
       this.state[`${formField}Error`] ? 'error' : null);
   
-
   handleChange = event => {
     const { name, value } = event.target;
 
@@ -42,6 +43,7 @@ class AuthForm extends React.Component {
     const { usernameError, passwordError, emailError } = this.state;
     const inputError = usernameError || emailError || passwordError;
 
+    // TODO: Rob - should not login if fields are empty!
     if (this.props.type === 'login' || !inputError) {
       this.props.onComplete(this.state);
       this.setState(this.emptyState);
@@ -50,7 +52,7 @@ class AuthForm extends React.Component {
         usernameDirty: true,
         emailDirty: true,
         passwordDirty: true,
-        submitted: true,
+        submitted: true, // TODO: Rob - I don't think we actually use this.
       });
     }
   }
@@ -60,6 +62,7 @@ class AuthForm extends React.Component {
       return null;
     }
 
+    // TODO: Rob - Validation needs to be more extreme
     switch (name) {
       case 'username':
         return value.length === 0 ? 'Username is required.' : null;
@@ -72,6 +75,7 @@ class AuthForm extends React.Component {
     }
   }
 
+  // Rob - creates a text input field with error message, add to form
   generateInput = formField => {
     const type = formField === 'password' ? 'password' : 'text';
     
@@ -91,15 +95,16 @@ class AuthForm extends React.Component {
   }
 
   render() {
+    // Rob - type must be either login or signup
     const { type } = this.props;
 
-    const signupRender = type === 'signup' ? this.generateInput('email') : null;
+    const emailInput = type === 'signup' ? this.generateInput('email') : null;
 
     return (
       <form onSubmit={this.handleSubmit}>
         {this.generateInput('username')}
         {this.generateInput('password')}
-        {signupRender}
+        {emailInput}
         <button type="submit">{type}</button>
       </form>
     );

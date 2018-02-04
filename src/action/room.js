@@ -1,11 +1,11 @@
 import superagent from 'superagent';
 
-const setRoomAction = room => ({
+export const setRoomAction = room => ({
   type: 'ROOM_SET',
   payload: room,
 });
 
-const removeRoomAction = () => ({
+export const removeRoomAction = () => ({
   type: 'ROOM_REMOVE',
 });
 

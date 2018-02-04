@@ -34,6 +34,7 @@ class SocketForm extends Component {
     const { roomNameError, roomName } = this.state;
 
     if (!roomNameError) {
+      // Rob - if the user doesn't have a socket open, open one
       if (!this.props.socket) {
         this.props.socketConnect();
       }
@@ -43,13 +44,14 @@ class SocketForm extends Component {
     } else {
       this.setState({
         roomNameDirty: true,
+        // Rob - I don't think we use submitted anywhere
         submitted: true,
       });
     }
   }
 
   handleValidation = (name, value) =>
-    (value.length === 0 ? 'Username is required.' : null);
+    (value.length === 0 ? 'Room name is required.' : null);
 
   generateInput = formField => (
     <Fragment>
@@ -66,6 +68,7 @@ class SocketForm extends Component {
   );
 
   render() {
+    // Rob - type should be either join or create
     const { type } = this.props;
 
     return (
@@ -82,7 +85,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  socketConnect: () => dispatch(setSocketAction()),
+  socketConnect: () => dispatch(setSocketAction(dispatch)),
+  // TODO: Rob - pass dispatch as payload to send to reducer to go to socket listeners...
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SocketForm);
