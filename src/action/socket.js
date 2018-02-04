@@ -9,8 +9,11 @@ const removeRoomAction = () => ({
   type: 'ROOM_REMOVE',
 });
 
-export const createRoomAction = (room) => (store) =>
-  store.dispatch(setRoomAction(room));
+export const createRoomAction = (room) => (store) => {
+  const clientSocket = store.getState().client.socket;
+  clientSocket.emit('createRoom', room);
+  return store.dispatch(setRoomAction(room));
+};
   // superagent.post(`${API_URL}/create`)
   //   .send(room)
   //   .then(console.log)

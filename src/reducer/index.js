@@ -5,5 +5,5 @@ import socket from './socket';
 
 export default combineReducers({
   token: auth,
-  room: socket,
+  client: socket,
 });
