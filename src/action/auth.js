@@ -1,4 +1,5 @@
 import superagent from 'superagent';
+import { removeSocketAction } from './socket';
 
 import { cookieDelete } from '../lib/cookie';
 
@@ -13,9 +14,10 @@ export const removeTokenAction = () => ({
   type: 'TOKEN_REMOVE',
 });
 
-export const logoutAction = () => {
+export const logoutAction = (socket) => (store) => {
   cookieDelete(COOKIE);
-  return removeTokenAction();
+  if (socket) store.dispatch(removeSocketAction(socket));
+  store.dispatch(removeTokenAction());
 };
 
 export const signupAction = (user) => (store) =>

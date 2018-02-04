@@ -11,7 +11,8 @@
     "watch": "webpack-dev-server --inline --hot",
     "start": "node index.js",
     "build": "webpack",
-    "heroku-postbuild": "webpack"
+    "heroku-postbuild": "webpack",
+    "bs": "webpack && node index.js"
   },
   "repository": {
     "type": "git",

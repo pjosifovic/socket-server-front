@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import AuthForm from '../auth-form';
 import SocketForm from '../socket-form';
 import { signupAction, loginAction, logoutAction } from '../../action/auth';
-import { createRoomAction, joinRoomAction } from '../../action/socket';
+import { createRoomAction, joinRoomAction } from '../../action/room';
 
 class Landing extends Component {
   state = {}; // only here to appease the linter
@@ -18,7 +18,7 @@ class Landing extends Component {
         <AuthForm type="login" onComplete={this.props.login} />
         <div>
           <h2>Logout</h2>
-          <button onClick={this.props.logout}>Logout</button>
+          <button onClick={() => this.props.logout(this.props.socket)}>Logout</button>
         </div>
         <h3>Create</h3>
         <SocketForm type="create" onComplete={this.props.create} />
@@ -32,9 +32,13 @@ class Landing extends Component {
 const mapDispatchToProps = dispatch => ({
   signup: userData => dispatch(signupAction(userData)),
   login: userData => dispatch(loginAction(userData)),
-  logout: () => dispatch(logoutAction()),
+  logout: socket => dispatch(logoutAction(socket)),
   join: roomName => dispatch(joinRoomAction(roomName)),
   create: roomName => dispatch(createRoomAction(roomName)),
 });
 
-export default connect(null, mapDispatchToProps)(Landing);
+const mapStateToProps = state => ({
+  socket: state.socket,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);
