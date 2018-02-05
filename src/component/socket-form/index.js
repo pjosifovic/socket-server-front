@@ -1,7 +1,4 @@
-import { connect } from 'react-redux';
 import React, { Fragment, Component } from 'react';
-
-import { setSocketAction } from '../../action/socket';
 
 class SocketForm extends Component {
   state = {
@@ -33,13 +30,8 @@ class SocketForm extends Component {
 
     const { roomNameError, roomName } = this.state;
 
-    if (!roomNameError) {
-      // Rob - if the user doesn't have a socket open, open one
-      if (!this.props.socket) {
-        this.props.socketConnect();
-      }
-
-      this.props.onComplete(roomName);
+    if (!roomNameError) {      
+      this.props.onComplete(this.props.socket, roomName);
       this.setState(this.emptyState);
     } else {
       this.setState({
@@ -80,13 +72,4 @@ class SocketForm extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  socket: !!state.socket,
-});
-
-const mapDispatchToProps = dispatch => ({
-  socketConnect: () => dispatch(setSocketAction(dispatch)),
-  // TODO: Rob - pass dispatch as payload to send to reducer to go to socket listeners...
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SocketForm);
+export default SocketForm;

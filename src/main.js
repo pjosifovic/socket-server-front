@@ -3,11 +3,10 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import './style/main.scss';
 import reducer from './reducer';
-import Landing from './component/landing';
+import App from './component/app';
 import thunk from './middleware/redux-thunk';
 import reporter from './middleware/redux-reporter';
 
@@ -20,10 +19,6 @@ document.body.appendChild(container);
 
 render(
   <Provider store={store} >
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={Landing} />
-      </Switch>
-    </BrowserRouter>
+    <App /> 
   </Provider>, container
 );
