@@ -10,13 +10,17 @@ export default dispatch => { // TODO: Rob - takes in dispatch to allow state cha
   });
 
   socket.on('room created', room => {
-    dispatch(setRoomAction(room));
+    dispatch(setRoomAction({
+      name: room,
+      owner: true,
+    }));
   });
 
   socket.on('room joined', room => {
-    console.log(room); 
-    // TODO: HANDLE ROOM JOINED, take to room dashboard
-    // TODO: SET STATE of ROOM to owner: false
+    dispatch(setRoomAction({
+      name: room,
+      owner: false,
+    }));
   });
 
   socket.on('room not found', room => {
@@ -29,9 +33,32 @@ export default dispatch => { // TODO: Rob - takes in dispatch to allow state cha
     // TODO: HANDLE ROOM NOT FOUND, modal popup warning
   });
 
+  socket.on('poll inbound', data => {
+    const responseToPoll = prompt(data.message);
+    console.log('front end data.room', data.room);
+    
+    socket.emit('poll response', {
+      responseToPoll,
+      room: data.room,
+    });
+  });
+
+  socket.on('poll result', message => {
+    console.log(message);
+  });
+
   return socket;
 };
 
 export const createRoomEmit = (socket, room) => {
   socket.emit('create room', room);
+};
+
+export const joinRoomEmit = (socket, room) => {
+  socket.emit('join room', room);
+};
+
+export const sendPoll = (socket) => {
+  const message = prompt('Asking something...');
+  socket.emit('send message', message);
 };

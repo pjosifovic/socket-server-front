@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import AuthForm from '../auth-form';
 import SocketForm from '../socket-form';
-import { createRoomEmit } from '../../lib/socket';
+import { createRoomEmit, joinRoomEmit, sendPoll } from '../../lib/socket';
 import { signupAction, loginAction, logoutAction } from '../../action/auth';
 
 class Landing extends Component {
@@ -26,7 +26,8 @@ class Landing extends Component {
         <h3>Create</h3>
         <SocketForm type="create" socket={this.props.socket} onComplete={createRoomEmit} />
         <h3>Join</h3>
-        <SocketForm type="join" onComplete={this.props.join} />
+        <SocketForm type="join" socket={this.props.socket} onComplete={joinRoomEmit} />
+        <button onClick={() => sendPoll(this.props.socket)} >send poll</button>
       </Fragment>
     );
   }
